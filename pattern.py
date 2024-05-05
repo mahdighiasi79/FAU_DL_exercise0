@@ -25,3 +25,21 @@ class Checker:
     def show(self):
         plt.imshow(self.output, cmap='gray')
         plt.show()
+
+
+class Circle:
+
+    def __init__(self, resolution, radius, position):
+        self.resolution = resolution
+        self.radius = radius
+        self.position = position
+        self.output = np.arange(resolution * resolution).reshape((resolution, resolution))
+
+    def draw(self):
+        row_numbers = np.floor(self.output / self.resolution)
+        column_numbers = self.output % self.resolution
+        x_distance = row_numbers - self.position[0]
+        y_distance = column_numbers - self.position[1]
+        position_distance = np.power(np.power(x_distance, 2) + np.power(y_distance, 2), 0.5)
+        self.output = position_distance > self.radius
+        return copy.deepcopy(self.output)
