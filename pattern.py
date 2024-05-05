@@ -1,6 +1,7 @@
 import numpy as np
 import copy
 import matplotlib.pyplot as plt
+from PIL import Image
 
 
 class Checker:
@@ -41,5 +42,10 @@ class Circle:
         x_distance = row_numbers - self.position[0]
         y_distance = column_numbers - self.position[1]
         position_distance = np.power(np.power(x_distance, 2) + np.power(y_distance, 2), 0.5)
-        self.output = position_distance > self.radius
+        self.output = position_distance < self.radius
         return copy.deepcopy(self.output)
+
+    def show(self):
+        img = Image.fromarray(self.output)
+        img = img.rotate(90)
+        img.show()
