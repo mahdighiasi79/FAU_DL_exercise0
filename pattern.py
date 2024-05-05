@@ -1,13 +1,13 @@
 import numpy as np
-import matplotlib as plt
 import copy
+import matplotlib.pyplot as plt
 
 
 class Checker:
 
     def __init__(self, resolution, tile_size):
-        if resolution % tile_size != 0:
-            print("resolution not dividable by the tile size\n")
+        if resolution % (tile_size * 2) != 0:
+            print("resolution not dividable by (2*tile_size)\n")
             return
         self.resolution = resolution
         self.tile_size = tile_size
@@ -21,3 +21,7 @@ class Checker:
         self.output = tile_row_numbers + tile_column_numbers
         self.output %= 2
         return copy.deepcopy(self.output)
+
+    def show(self):
+        plt.imshow(self.output, cmap='gray')
+        plt.show()
