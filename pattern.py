@@ -49,3 +49,31 @@ class Circle:
         img = Image.fromarray(self.output)
         img = img.rotate(90)
         img.show()
+
+
+class Spectrum:
+
+    def __init__(self, resolution):
+        self.resolution = resolution
+        self.output = []
+
+    def draw(self):
+        grid = np.arange(self.resolution * self.resolution).reshape((self.resolution, self.resolution))
+        x = np.floor(grid / self.resolution)
+        y = grid % self.resolution
+
+        red = np.abs(x + np.abs(y - self.resolution) - (2 * self.resolution))
+        red /= (2 * self.resolution)
+
+        green = np.abs(np.abs(x - self.resolution) + np.abs(y - (self.resolution / 2)) - (2 * self.resolution))
+        green /= (2 * self.resolution)
+
+        blue = np.abs(x + y - (2 * self.resolution))
+        blue /= (2 * self.resolution)
+
+        self.output = np.stack((red, green, blue), axis=2)
+        return copy.deepcopy(self.output)
+
+    def show(self):
+        plt.imshow(self.output)
+        plt.show()

@@ -3,6 +3,5 @@ import pattern
 
 
 if __name__ == "__main__":
-    circle = pattern.Circle(500, 100, [200, 200])
-    circle.draw()
-    circle.show()
+    a = np.arange(24).reshape((2, 3, 4))
+    print(a)

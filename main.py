@@ -8,9 +8,14 @@ if __name__ == "__main__":
     # checker.draw()
     # checker.show()
 
-    resolution = 500
-    radius = 100
-    position = [200, 200]
-    circle = pattern.Circle(resolution, radius, position)
-    circle.draw()
-    circle.show()
+    # resolution = 500
+    # radius = 100
+    # position = [200, 200]
+    # circle = pattern.Circle(resolution, radius, position)
+    # circle.draw()
+    # circle.show()
+
+    resolution = 1000
+    spectrum = pattern.Spectrum(resolution)
+    spectrum.draw()
+    spectrum.show()
