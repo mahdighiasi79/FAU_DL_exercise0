@@ -3,6 +3,9 @@ import json
 import scipy.misc
 import numpy as np
 import matplotlib.pyplot as plt
+import skimage
+
+num_images = 100
 
 
 # In this exercise task you will implement an image generator. Generator objects in python are defined as having a next function.
@@ -30,6 +33,13 @@ class ImageGenerator:
         self.rotation = rotation
         self.mirroring = mirroring
         self.shuffle = shuffle
+        self.batch_number = 0
+
+    def add_image(self, i, images, labels, labels_dict):
+        img = np.load(self.file_path + str(i) + ".npy")
+        img = skimage.transform.resize(img, self.image_size)
+        images.append(img)
+        labels.append(labels_dict[str(i)])
 
     def next(self):
         # This function creates a batch of images and corresponding labels and returns them.
@@ -37,8 +47,31 @@ class ImageGenerator:
         # Note that your amount of total data might not be divisible without remainder with the batch_size.
         # Think about how to handle such cases
         #TODO: implement next method
-        pass
-        #return images, labels
+        images = []
+        labels = []
+        labels_dict = np.load(self.label_path)
+        num_batches = np.floor(num_images / self.batch_size)
+        batch_start = self.batch_number * self.batch_size
+
+        if self.batch_number >= num_batches:
+            for i in range(batch_start, num_images):
+                self.add_image(i, images, labels, labels_dict)
+            for i in range(self.batch_size - (num_images - batch_start)):
+                self.add_image(i, images, labels, labels_dict)
+            if batch_start == num_images:
+                self.batch_number = 1
+            else:
+                self.batch_number = 0
+
+        else:
+            batch_end = (self.batch_number + 1) * self.batch_size
+            for i in range(batch_start, batch_end):
+                self.add_image(i, images, labels, labels_dict)
+            self.batch_number += 1
+
+        images = np.array(images)
+        labels = np.array(labels)
+        return images, labels
 
     def augment(self,img):
         # this function takes a single image as an input and performs a random transformation

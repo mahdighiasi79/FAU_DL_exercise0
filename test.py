@@ -1,8 +1,13 @@
 import numpy as np
+import skimage.transform
+import matplotlib.pyplot as plt
 import pattern
 
 
 if __name__ == "__main__":
-    a = np.load("data.zip")
-    # print(a.shape)
-    print(a["Labels.json"])
+    img = np.load("exercise_data\\1.npy")
+    plt.imshow(img)
+    plt.show()
+    img = skimage.transform.resize(img, [100, 100, 3])
+    plt.imshow(img)
+    plt.show()
