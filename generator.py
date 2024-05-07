@@ -4,6 +4,7 @@ import scipy.misc
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 # In this exercise task you will implement an image generator. Generator objects in python are defined as having a next function.
 # This next function returns the next generated object. In our case it returns the input of a neural network each time it gets called.
 # This input consists of a batch of images and its corresponding labels.
@@ -20,7 +21,15 @@ class ImageGenerator:
 
         self.class_dict = {0: 'airplane', 1: 'automobile', 2: 'bird', 3: 'cat', 4: 'deer', 5: 'dog', 6: 'frog',
                            7: 'horse', 8: 'ship', 9: 'truck'}
+
         #TODO: implement constructor
+        self.file_path = file_path
+        self.label_path = label_path
+        self.batch_size = batch_size
+        self.image_size = image_size
+        self.rotation = rotation
+        self.mirroring = mirroring
+        self.shuffle = shuffle
 
     def next(self):
         # This function creates a batch of images and corresponding labels and returns them.
