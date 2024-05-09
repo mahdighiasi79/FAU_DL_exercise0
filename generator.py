@@ -38,6 +38,7 @@ class ImageGenerator:
         self.mirroring = mirroring
         self.shuffle = shuffle
         self.batch_number = 0
+        self.num_epoch = 0
 
     def add_image(self, i, images, labels, labels_dict):
         img = np.load(self.file_path + str(i) + ".npy")
@@ -63,6 +64,7 @@ class ImageGenerator:
             np.random.shuffle(data_order)
 
         if self.batch_number >= num_batches:
+            self.num_epoch += 1
             for i in range(batch_start, num_images):
                 self.add_image(data_order[i], images, labels, labels_dict)
             for i in range(self.batch_size - (num_images - batch_start)):
@@ -100,12 +102,14 @@ class ImageGenerator:
 
     def current_epoch(self):
         # return the current epoch number
-        return 0
+        return self.num_epoch
 
     def class_name(self, x):
         # This function returns the class name for a specific input
         #TODO: implement class name function
-        return
+        labels = np.load(self.label_path)
+        return labels[str(x)]
+    
     def show(self):
         # In order to verify that the generator creates batches as required, this functions calls next to get a
         # batch of images and labels and visualizes it.
