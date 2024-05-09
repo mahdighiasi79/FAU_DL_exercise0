@@ -1,13 +1,10 @@
 import os.path
 import json
 import random
-from PIL import Image
 import scipy.misc
 import numpy as np
 import matplotlib.pyplot as plt
 import skimage
-import math
-import copy
 
 num_images = 100
 
@@ -42,7 +39,7 @@ class ImageGenerator:
 
     def add_image(self, i, images, labels, labels_dict):
         img = np.load(self.file_path + str(i) + ".npy")
-        self.augment(img)
+        img = self.augment(img)
         img = skimage.transform.resize(img, self.image_size)
         images.append(img)
         labels.append(labels_dict[str(i)])
@@ -55,7 +52,8 @@ class ImageGenerator:
         #TODO: implement next method
         images = []
         labels = []
-        labels_dict = np.load(self.label_path)
+        labels_dict = open(self.label_path)
+        labels_dict = json.load(labels_dict)
         num_batches = np.floor(num_images / self.batch_size)
         batch_start = self.batch_number * self.batch_size
 
@@ -107,9 +105,8 @@ class ImageGenerator:
     def class_name(self, x):
         # This function returns the class name for a specific input
         #TODO: implement class name function
-        labels = np.load(self.label_path)
-        return labels[str(x)]
-    
+        return self.class_dict[x]
+
     def show(self):
         # In order to verify that the generator creates batches as required, this functions calls next to get a
         # batch of images and labels and visualizes it.
