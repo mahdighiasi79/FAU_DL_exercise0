@@ -4,6 +4,8 @@ import scipy.misc
 import numpy as np
 import matplotlib.pyplot as plt
 import skimage
+import math
+import copy
 
 num_images = 100
 
@@ -77,10 +79,19 @@ class ImageGenerator:
         labels = np.array(labels)
         return images, labels
 
-    def augment(self,img):
+    def augment(self, img):
         # this function takes a single image as an input and performs a random transformation
         # (mirroring and/or rotation) on it and outputs the transformed image
         #TODO: implement augmentation function
+
+        if self.mirroring:
+            x_len = len(img)
+            y_len = len(img[0])
+            for i in range(math.floor(y_len / 2)):
+                for j in range(x_len):
+                    swap = copy.deepcopy(img[j][i])
+                    img[j][i] = copy.deepcopy(img[j][x_len - i - 1])
+                    img[j][x_len - i - 1] = swap
 
         return img
 
