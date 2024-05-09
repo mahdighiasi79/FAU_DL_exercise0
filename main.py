@@ -3,7 +3,7 @@ import generator
 
 
 if __name__ == "__main__":
-    gen = generator.ImageGenerator("exercise_data\\", "Labels.json", 9, [32, 32, 3], True, True, True)
+    gen = generator.ImageGenerator("exercise_data\\", "Labels.json", 15, [100, 100, 3], True, True, True)
     gen.show()
 
     # resolution = 500

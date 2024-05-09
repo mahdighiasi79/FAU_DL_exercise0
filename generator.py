@@ -124,14 +124,19 @@ class ImageGenerator:
         middle = math.floor(len(divisors) / 2)
         num_cols = divisors[middle]
         if len(divisors) % 2 == 0:
-            num_rows = divisors[middle + 1]
+            num_rows = divisors[middle - 1]
         else:
             num_rows = num_cols
 
         images, labels = self.next()
         f, axarr = plt.subplots(num_rows, num_cols, constrained_layout=True)
-        for i in range(num_rows):
+        if num_rows != 1:
+            for i in range(num_rows):
+                for j in range(num_cols):
+                    axarr[i, j].imshow(images[(i * num_cols) + j])
+                    axarr[i, j].set_title(self.class_dict[labels[(i * num_cols) + j]])
+        else:
             for j in range(num_cols):
-                axarr[i, j].imshow(images[(i * num_cols) + j])
-                axarr[i, j].set_title(self.class_dict[labels[(i * num_cols) + j]])
+                axarr[j].imshow(images[j])
+                axarr[j].set_title(self.class_dict[labels[j]])
         plt.show()
