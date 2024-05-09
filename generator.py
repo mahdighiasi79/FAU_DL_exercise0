@@ -1,3 +1,4 @@
+import math
 import os.path
 import json
 import random
@@ -107,9 +108,30 @@ class ImageGenerator:
         #TODO: implement class name function
         return self.class_dict[x]
 
+    @staticmethod
+    def divisors_generator(x):
+        result = []
+        for i in range(1, x + 1):
+            if x % i == 0:
+                result.append(i)
+        return result
+
     def show(self):
         # In order to verify that the generator creates batches as required, this functions calls next to get a
         # batch of images and labels and visualizes it.
         #TODO: implement show method
-        pass
+        divisors = self.divisors_generator(self.batch_size)
+        middle = math.floor(len(divisors) / 2)
+        num_cols = divisors[middle]
+        if len(divisors) % 2 == 0:
+            num_rows = divisors[middle + 1]
+        else:
+            num_rows = num_cols
 
+        images, labels = self.next()
+        f, axarr = plt.subplots(num_rows, num_cols, constrained_layout=True)
+        for i in range(num_rows):
+            for j in range(num_cols):
+                axarr[i, j].imshow(images[(i * num_cols) + j])
+                axarr[i, j].set_title(self.class_dict[labels[(i * num_cols) + j]])
+        plt.show()
