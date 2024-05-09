@@ -1,5 +1,7 @@
 import os.path
 import json
+import random
+from PIL import Image
 import scipy.misc
 import numpy as np
 import matplotlib.pyplot as plt
@@ -39,6 +41,7 @@ class ImageGenerator:
 
     def add_image(self, i, images, labels, labels_dict):
         img = np.load(self.file_path + str(i) + ".npy")
+        self.augment(img)
         img = skimage.transform.resize(img, self.image_size)
         images.append(img)
         labels.append(labels_dict[str(i)])
@@ -85,13 +88,13 @@ class ImageGenerator:
         #TODO: implement augmentation function
 
         if self.mirroring:
-            x_len = len(img)
-            y_len = len(img[0])
-            for i in range(math.floor(y_len / 2)):
-                for j in range(x_len):
-                    swap = copy.deepcopy(img[j][i])
-                    img[j][i] = copy.deepcopy(img[j][x_len - i - 1])
-                    img[j][x_len - i - 1] = swap
+            y_n = random.randint(0, 1000) % 2
+            if y_n == 1:
+                img = np.fliplr(img)
+
+        if self.rotation:
+            degree = random.randint(0, 5000) % 4
+            img = np.rot90(img, degree, axes=(1, 0))
 
         return img
 

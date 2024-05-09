@@ -46,9 +46,9 @@ class Circle:
         return copy.deepcopy(self.output)
 
     def show(self):
-        img = Image.fromarray(self.output)
-        img = img.rotate(90)
-        img.show()
+        img = np.rot90(self.output, 1, axes=(0, 1))
+        plt.imshow(img, cmap='gray')
+        plt.show()
 
 
 class Spectrum:
