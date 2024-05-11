@@ -43,11 +43,11 @@ class Circle:
         y_distance = column_numbers - self.position[1]
         position_distance = np.power(np.power(x_distance, 2) + np.power(y_distance, 2), 0.5)
         self.output = position_distance < self.radius
+        self.output = np.rot90(self.output, 1, axes=(0, 1))
         return copy.deepcopy(self.output)
 
     def show(self):
-        img = np.rot90(self.output, 1, axes=(0, 1))
-        plt.imshow(img, cmap='gray')
+        plt.imshow(self.output, cmap='gray')
         plt.show()
 
 
