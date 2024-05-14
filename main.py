@@ -3,8 +3,8 @@ import generator
 
 
 if __name__ == "__main__":
-    gen = generator.ImageGenerator("exercise_data\\", "Labels.json", 15, [100, 100, 3], True, True, True)
-    gen.show()
+    # gen = generator.ImageGenerator("exercise_data\\", "Labels.json", 15, [100, 100, 3], True, True, True)
+    # gen.show()
 
     # resolution = 500
     # tile_size = 50
@@ -19,7 +19,7 @@ if __name__ == "__main__":
     # circle.draw()
     # circle.show()
     #
-    # resolution = 1000
-    # spectrum = pattern.Spectrum(resolution)
-    # spectrum.draw()
-    # spectrum.show()
+    resolution = 1000
+    spectrum = pattern.Spectrum(resolution)
+    spectrum.draw()
+    spectrum.show()

@@ -39,11 +39,10 @@ class Circle:
     def draw(self):
         row_numbers = np.floor(self.output / self.resolution)
         column_numbers = self.output % self.resolution
-        x_distance = row_numbers - self.position[0]
-        y_distance = column_numbers - self.position[1]
+        x_distance = row_numbers - self.position[1]
+        y_distance = column_numbers - self.position[0]
         position_distance = np.power(np.power(x_distance, 2) + np.power(y_distance, 2), 0.5)
         self.output = position_distance < self.radius
-        self.output = np.rot90(self.output, 1, axes=(0, 1))
         return copy.deepcopy(self.output)
 
     def show(self):
