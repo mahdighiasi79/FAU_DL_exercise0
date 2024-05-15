@@ -61,14 +61,14 @@ class Spectrum:
         x = np.floor(grid / self.resolution)
         y = grid % self.resolution
 
-        red = np.abs(x + np.abs(y - self.resolution) - (2 * self.resolution))
+        red = y - x + self.resolution
         red /= (2 * self.resolution)
+
+        blue = -x - y + (2 * self.resolution)
+        blue /= (2 * self.resolution)
 
         green = np.abs(np.abs(x - self.resolution) + np.abs(y - (self.resolution / 2)) - (2 * self.resolution))
         green /= (2 * self.resolution)
-
-        blue = np.abs(x + y - (2 * self.resolution))
-        blue /= (2 * self.resolution)
 
         self.output = np.stack((red, green, blue), axis=2)
         return copy.deepcopy(self.output)
